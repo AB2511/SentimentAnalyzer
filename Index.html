@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    select, button {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      background: #3498db;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background-color: #3498db;
+      color: white;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .positive { color: #27ae60; }
+    .negative { color: #e74c3c; }
+    .neutral { color: #7f8c8d; }
+    @media (max-width: 600px) {
+      table { font-size: 12px; }
+      th, td { padding: 8px; }
+      .filters { flex-direction: column; }
+      select, button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>Sentiment Watchdog Dashboard</h1>
+    <div class="filters">
+      <select id="sentimentFilter" onchange="refreshData()">
+        <option value="all">All Sentiments</option>
+        <option value="positive">Positive</option>
+        <option value="negative">Negative</option>
+        <option value="neutral">Neutral</option>
+      </select>
+      <button onclick="refreshData()">Apply Filters</button>
+      <button onclick="refreshData()">Refresh</button>
+    </div>
+    <table id="dataTable">
+      <tr>
+        <th>Post ID</th>
+        <th>Post Text</th>
+        <th>Sentiment</th>
+        <th>Source</th>
+        <th>Author</th>
+        <th>URL</th>
+        <th>Date</th>
+      </tr>
+      <? var data = eval(data) || []; for (var i = 0; i < data.length; i++) { ?>
+        <tr>
+          <td><?= data[i][0] || 'N/A' ?></td>
+          <td><?= data[i][1] || 'N/A' ?></td>
+          <td class="<?= (data[i][2] || '').includes('positive') ? 'positive' : (data[i][2] || '').includes('negative') ? 'negative' : (data[i][2] || '').includes('neutral') ? 'neutral' : '' ?>">
+            <?= data[i][2] || 'Pending' ?>
+          </td>
+          <td><?= data[i][3] || 'Unknown' ?></td>
+          <td><?= data[i][4] || 'Unknown' ?></td>
+          <td><?= data[i][5] || 'N/A' ?></td>
+          <td><?= data[i][6] || 'N/A' ?></td>
+        </tr>
+      <? } ?>
+    </table>
+  </div>
+  <script>
+    function refreshData() {
+      var sentiment = document.getElementById("sentimentFilter").value;
+      google.script.run.withSuccessHandler(updateTable).getFilteredData(sentiment);
+    }
+
+    function updateTable(newData) {
+      var table = document.getElementById("dataTable");
+      var rows = table.getElementsByTagName("tr");
+      for (var i = rows.length - 1; i > 0; i--) {
+        table.deleteRow(i);
+      }
+      newData.forEach(row => {
+        var tr = table.insertRow(-1);
+        ['postId', 'postText', 'sentiment', 'source', 'author', 'url', 'date'].forEach((col, idx) => {
+          var td = tr.insertCell();
+          td.textContent = row[idx] || 'N/A';
+          if (idx === 2 && row[idx]) {
+            td.className = row[idx].includes('positive') ? 'positive' : row[idx].includes('negative') ? 'negative' : row[idx].includes('neutral') ? 'neutral' : '';
+          }
+        });
+      });
+    }
+    window.onload = refreshData;
+  </script>
+</body>
+</html>
