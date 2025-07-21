@@ -36,7 +36,7 @@ This AI agent tracks public sentiment on Reddit, offering a creative pivot from 
    - Save and deploy as a web app:
      - Click **Deploy > New Deployment**.
      - Select **Type: Web app**, set “Who has access” to “Anyone”, and copy the web app URL.
-     - Here's our live link  `https://script.google.com/macros/s/AKfycbyhtEzPh_q-tQOGnuNQfGSoTHQzWwH_Q3nqwFjP7_p4DSOkPZbeEegTRftT6XbY_bI_XQ/exec`).
+     - Here's our live link  https://script.google.com/macros/s/AKfycbyhtEzPh_q-tQOGnuNQfGSoTHQzWwH_Q3nqwFjP7_p4DSOkPZbeEegTRftT6XbY_bI_XQ/exec
 
 3. **Zapier Integration**
    - Create a Zap with:
