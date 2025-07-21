@@ -1,6 +1,6 @@
 # Customer Sentiment Watchdog
 
-Welcome to the **Customer Sentiment Watchdog**, an AI-powered tool built by Sneha Barge and Anjali Barge for the **AI Agent Hackathon by Product Space** (July 2025). This project analyzes real-time Reddit sentiments for brands, tags emotional tones, and alerts teams to negative trends—all using a no-code stack!
+Welcome to the **Customer Sentiment Watchdog**, an AI-powered tool built by Sneha Barge and Anjali Barge for the **AI Agent Hackathon by Product Space** (July 2025). This project analyzes real-time Reddit sentiments for brands, tags emotional tones, and alerts teams to negative trends—all using a stack!
 
 ## Project Overview
 
